@@ -1,9 +1,13 @@
-import configmodule from "./configmodule"
-import debugmodule from "./debugmodule"
+import * as configmodule from "./configmodule.js"
+import * as debugmodule from "./debugmodule.js"
+import * as queryfieldmodule from "./queryfieldmodule.js"
+import * as statemodule from "./statemodule.js"
 
 Modules = {
     configmodule,
-    debugmodule
+    debugmodule,
+    queryfieldmodule,
+    statemodule,
 }
 
 export default Modules

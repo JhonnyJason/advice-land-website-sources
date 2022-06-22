@@ -1,0 +1,56 @@
+#hero-section
+    width 100%
+    height 80vh
+    background-image: url('img/hero1.jpg')
+    background-size: cover
+    background-repeat: no-repeat
+    background-position center
+    position relative
+
+#recommendation-section
+    max-width: max-content-width
+    box-sizing: border-box
+    width calc(100% - 20px)
+    margin auto
+    padding 210px 10px
+    display grid
+    grid-template-columns:  1fr
+    grid-row-gap: 90px
+    grid-column-gap: 30px
+
+    .article-preview
+        position relative
+        background-color: cd-bright
+        height 300px
+        filter: drop-shadow(1px 1px 2px cd-flash)
+        // border solid 2px cd-flash
+        background-image: url("img/hero1.jpg")
+        background-size cover
+        background-repeat: no-repeat
+        background-position center
+
+        h2
+            position absolute
+            top 50%
+            left 50%
+            transform translate(-50%, -50%)
+            color cd-flash
+            filter: drop-shadow(0 2px 2px black)
+            padding 20px           
+            width 100%
+            box-sizing: border-box
+            
+
+    #entry1.article-preview
+        background-image: url("https://hackmd.io/_uploads/ryGzABeqc.jpg")
+
+    #entry2.article-preview
+        background-image: url("img/coffee-not-coffee.jpg")
+
+@media screen and (min-width: 640px)
+    #recommendation-section
+        grid-template-columns: 1fr 1fr
+
+@media screen and (min-width: 960px)
+    #recommendation-section
+        grid-template-columns: 1fr 1fr 1fr

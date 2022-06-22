@@ -1,0 +1,48 @@
+// queryfield styles
+#queryfield
+    position absolute 
+    top 50%
+    left 50%
+    transform translate(-50%,-50%)
+
+    display: flex
+    align-items: center
+
+    min-width 280px
+    width calc(100% - 40px)
+    max-width: max-content-width
+    box-sizing: border-box
+
+    background-color alpha(cd-dark, 0.7)
+    border solid 2px cd-flash
+    border-radius: 30px
+    overflow: hidden
+
+
+    input
+        font-size: 15pt 
+        text-overflow: ellipsis;
+        padding: 7px 14px
+        box-sizing: border-box
+        width 100%
+        color cd-bright
+        background-color transparent
+        text-align: center
+        border none
+
+    input:focus
+        padding: 7px 20px
+        
+
+    #query-button
+        padding 10px
+        background-color alpha(cd-dark, 0.8)
+        color cd-flash
+        // border-radius 50%
+        svg
+            width 20px
+            height 20px
+
+// @media screen and() {
+    
+// }

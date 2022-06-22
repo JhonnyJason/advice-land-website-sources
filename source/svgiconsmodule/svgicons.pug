@@ -1,0 +1,19 @@
+//-############################################################
+svg#svgicon-definitions
+    defs
+        filter#svg-dropshadow-filter(height="130%" width="130%")
+            fegaussianblur(in="SourceGraphic" stddeviation="3" result="blurOut")
+            feColorMatrix(in="blurOut" type="saturate" values="0.25" result="shadowOut")
+            feblend(in='SourceGraphic' in2='shadowOut' mode='normal')
+
+//-############################################################
+svg#svgicon-symbols
+
+    symbol#svg-cross-icon(preserveAspectRatio="xMidYMid meet" viewBox='0 0 24 24')
+        path(fill='currentColor' d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z')
+    
+    symbol#svg-menu-icon(preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24")
+        path(fill="currentColor", d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z")
+
+    symbol#svg-query-icon(preserveAspectRatio="xMidYMid meet" viewbox='0 0 24 24')
+        path(fill='currentColor' d='M3 21V17H10.5C12.43 17 14 15.43 14 13.5V11H10L16 4L22 11H18V13.5C18 17.64 14.64 21 10.5 21H3Z')

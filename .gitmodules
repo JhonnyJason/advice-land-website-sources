@@ -1,0 +1,9 @@
+[submodule "source/buttonstylemodule"]
+	path = source/buttonstylemodule
+	url = git@github.com:JhonnyJason/pwa-sources-buttonstylemodule.git
+[submodule "source/statemodule"]
+	path = source/statemodule
+	url = git@github.com:JhonnyJason/pwa-sources-statemodule.git
+[submodule "articles/article1"]
+	path = articles/article1
+	url = git@github.com:JhonnyJason/advice-land-article1.git
