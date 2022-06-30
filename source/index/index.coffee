@@ -5,10 +5,7 @@ domconnect.initialize()
 global.allModules = Modules
 
 ############################################################
-appStartup = ->
-    ## which modules shall be kickstarted?
-    # Modules.appcoremodule.startUp()
-    return
+appStartup = Modules.appstartupmodule.startUp
 
 ############################################################
 run = ->

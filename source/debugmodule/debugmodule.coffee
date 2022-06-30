@@ -1,8 +1,12 @@
-debugmodule = {name: "debugmodule", uimodule: false}
+import { addModulesToDebug } from "thingy-debug"
 
 ############################################################
-debugmodule.modulesToDebug = 
+export modulesToDebug = 
     unbreaker: true
-    configmodule: true
+    appstartupmodule: true
+    # configmodule: true
+    peertopeermodule: true
+    # statemodule: true
 
-export default debugmodule
+
+addModulesToDebug(modulesToDebug)
