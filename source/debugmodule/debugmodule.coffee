@@ -5,8 +5,9 @@ export modulesToDebug =
     unbreaker: true
     appstartupmodule: true
     # configmodule: true
-    peertopeermodule: true
+    # peertopeermodule: true
     # statemodule: true
+    websocketmodule: true
 
 
 addModulesToDebug(modulesToDebug)

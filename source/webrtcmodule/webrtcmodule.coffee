@@ -1,15 +1,17 @@
 ############################################################
 #region debug
 import { createLogFunctions } from "thingy-debug"
-{log, olog} = createLogFunctions("appstartupmodule")
+{log, olog} = createLogFunctions("webrtcmodule")
 #endregion
 
-import * as webRTC from "./webrtcmodule"
+############################################################
+export initialize = ->
+    log "initialize"
+    #Implement or Remove :-)
+    return
+
 
 ############################################################
 export startUp = ->
     log "startUp"
-    try
-        await webRTC.startUp()
-
-    catch err then log err
+    return
