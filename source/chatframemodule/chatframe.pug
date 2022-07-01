@@ -1,0 +1,24 @@
+//- chatframe structure
+#chatframe
+    #incoming-video-streams-block 
+    #my-video-streams-block
+        #desktop-capture-block 
+        #web-cam-block
+    #chat-history-block
+
+    #peer-display-block
+
+    #chat-input-block
+        input#chat-input 
+
+
+    #hidden-templates
+        #peer-display-template
+            .peer-display-element(uuid="{{{uuid}}}")
+                .peer-name-display {{{uuid}}}
+                .peer-call-button.click-button: svg: use(href="#svg-phone-icon")
+                .peer-video-button.click-button: svg: use(href="#svg-cam-icon")
+        #chat-element-template
+            .chat-element 
+                .chat-text {{{text}}}
+                .chat-time {{{time}}}
