@@ -1,5 +1,5 @@
 # export websocketURL = "wss://localhost:6999"
-export websocketURL = "wss://singalling-star.advice.land"
+export websocketURL = "wss://signalling-star.advice.land"
 
 export reconnectTimeoutMS = 200
 
