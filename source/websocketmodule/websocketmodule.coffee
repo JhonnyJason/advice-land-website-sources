@@ -7,17 +7,22 @@ import { createLogFunctions } from "thingy-debug"
 ############################################################
 import { websocketURL, reconnectTimeoutMS } from "./configmodule.js"
 import * as chatFrame from "./chatframemodule.js"
+import * as webRTC from "./webrtcmodule.js"
 
 ############################################################
 socket = null
 pendingReconnect = false
 keepDisconnected = true
 
+############################################################
 websocketReady = null
 websocketReadySignal = null
 
-
+############################################################
 knownUUIDS = []
+
+############################################################
+UUID = crypto.randomUUID()
 
 ############################################################
 export initialize = ->
@@ -37,14 +42,13 @@ websocketDisconnected = (evnt) ->
     pendingReconnect = true
     setTimeout(reconnectSocket, reconnectTimeoutMS)
     return
-
-
 websocketConnected = (evnt) -> 
     log "websocketConnected"
     if websocketReadySignal?
         websocketReadySignal()
         websocketReadySignal = null
         webSocketReady = null
+    sendMessage("setuuid #{UUID}")
     return
 
 websocketMessageReceived = (evnt) ->
@@ -52,17 +56,19 @@ websocketMessageReceived = (evnt) ->
     log evnt.data
 
     keyEnd = evnt.data.indexOf(" ")
-    if keyEnd < 0 then key = evnt.data
+    if keyEnd < 0 then key = evnt.data.trim()
     else 
         key = evnt.data.substring(0, keyEnd)
+        # log typeof key
+        # log key
         content = evnt.data.substring(keyEnd).trim()
+        # log typeof content
+        # log content
 
     switch key
         when "alluids" then applyAllUUIDS(content)
-        when "uuidadded" then applyUUIDAdded(content)
-        when "uuidremoved" then applyUUIDRemoved(content)
         when "chat" then handleChat(content)
-        when "sdp" then handleSDP(content)
+        when "sdp" then webRTC.handleSDP(content)
         else log "unknown key #{key}"
 
     return
@@ -74,27 +80,11 @@ applyAllUUIDS = (content) ->
     chatFrame.displayPeers(knownUUIDS)
     return
 
-applyUUIDAdded = (content) ->
-    log "applyUUIDAdded"
-    knownUUIDS.push(content)
-    chatFrame.displayPeers(knownUUIDS)
-    return
-
-applyUUIDRemoved = (content) ->
-    log "applyUUIDRemoved"
-    knownUUIDS = knownUUIDS.filter((el) -> el != content)
-    chatFrame.displayPeers(knownUUIDS)
-    return
-
 handleChat = (content) ->
     log "handleChat"
-    chatFrame.addChatMessage(message)
+    log content
+    chatFrame.addChatMessage(content)
     return
-
-handleSDP = (content) ->
-    log "handleSDP"
-    return
-
 
 ############################################################
 reconnectSocket = ->
@@ -133,3 +123,5 @@ export disconnect = ->
     socket.close()
     socket = null
     return
+
+export getUUID = -> UUID

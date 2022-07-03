@@ -19,24 +19,24 @@
     transition transform 0.3s
 
 #my-video-streams-block
-    display: none
-    // display flex
+    // display: none
+    display flex
     position absolute
     bottom 100px
     right 0
     width 320px
     height 160px
-    background-color black
+    background-color transparent
 
-#desktop-capture-block 
+#desktop-capture-block
     width 160px
     height 160px
-    background-color green
+    background-color transparent
 
 #web-cam-block
     width 160px
     height 160px
-    background-color blue
+    background-color transparent
 
 
 #incoming-video-streams-block 
@@ -92,6 +92,10 @@
             padding 5px
         .peer-video-button
             padding 5px
+            
+    .peer-display-element.self
+        background-color #4849
+        
 
 #chat-history-block
     position: absolute
@@ -112,6 +116,8 @@
 
     .chat-text
         text-align: left
+        // color cd-flash
+        color white
 
     .chat-time
         text-align: right
@@ -129,19 +135,15 @@
         left 40%
         transform none
 
-
     #my-video-streams-block
         right 120px
         width 540px
         height 270px
-        background-color black
 
     #desktop-capture-block 
         width 270px
         height 270px
-        background-color green
 
     #web-cam-block
         width 270px
         height 270px
-        background-color blue

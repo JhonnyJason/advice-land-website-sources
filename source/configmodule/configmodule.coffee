@@ -1,5 +1,6 @@
-export websocketURL = "wss://localhost:6999"
-# export websocketURL = "ws://localhost:6999"
+# export websocketURL = "wss://localhost:6999"
+export websocketURL = "wss://singalling-star.advice.land"
+
 export reconnectTimeoutMS = 200
 
 export appId = "p2p-chat-demo"

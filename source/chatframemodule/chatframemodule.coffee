@@ -5,6 +5,7 @@ import { createLogFunctions } from "thingy-debug"
 #endregion
 
 ############################################################
+import * as webRTC from "./webrtcmodule"
 import * as WS from "./websocketmodule.js"
 import M from "mustache"
 
@@ -14,6 +15,7 @@ chatTemplate = null
 
 
 allChatMessages = []
+maxMessageNr = 64
 
 ############################################################
 export initialize = ->
@@ -81,6 +83,7 @@ pushChatOut = ->
     WS.disconnect()
     chatHistoryBlock.innerHTML = ""
     peerDisplayBlock.innerHTML = ""
+    allChatMessages = []
     return
 
 
@@ -102,12 +105,14 @@ peerCallClicked = (evnt) ->
     log "peerCallClicked"
     uuid = getUUIDFromTree(evnt.target)
     log uuid
+    webRTC.initiateConnection(uuid, "call")
     return
 
 peerVideoClicked = (evnt) ->
     log "peerVideoClicked"
     uuid = getUUIDFromTree(evnt.target)
     log uuid
+    webRTC.initiateConnection(uuid, "video")
     return
 
 ############################################################
@@ -126,6 +131,8 @@ export displayPeers = (uuids) ->
         peersHTML += M.render(peerTemplate, cObj)
     peerDisplayBlock.innerHTML = peersHTML
 
+    ownDisplayBlock = peerDisplayBlock.querySelector("[uuid='#{WS.getUUID()}']")
+    if ownDisplayBlock? then ownDisplayBlock.classList.add("self")
 
     callButtons = peerDisplayBlock.getElementsByClassName("peer-call-button")
     btn.addEventListener("click", peerCallClicked) for btn in callButtons
@@ -134,11 +141,14 @@ export displayPeers = (uuids) ->
     btn.addEventListener("click", peerVideoClicked) for btn in videoButtons
     return
 
+
+
 export addChatMessage = (message) ->
     log message
     now = new Date()
-    hours = now.getHours()
-    minutes = now.getMinutes()
+    hours = "#{now.getHours()}"
+    minutes = "#{now.getMinutes()}"
+    if hours.length < 2 then hours = "0"+hours
     if minutes.length < 2 then minutes = "0"+minutes
     timeNow = "#{hours}:#{minutes}"
     cObj = {
@@ -146,5 +156,7 @@ export addChatMessage = (message) ->
         time: timeNow
     }
     allChatMessages.unshift(cObj)
+    if allChatMessages.length > maxMessageNr then allChatMessages.length = maxMessageNr
+    log allChatMessages.length
     renderChatMessages()
     return

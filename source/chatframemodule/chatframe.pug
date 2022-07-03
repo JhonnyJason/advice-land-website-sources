@@ -1,24 +1,21 @@
 //- chatframe structure
+#hidden-templates
+    #peer-display-template
+        li.peer-display-element(uuid="{{{uuid}}}")
+            .peer-name-display {{{uuid}}}
+            .peer-call-button.click-button: svg: use(href="#svg-phone-icon")
+            .peer-video-button.click-button: svg: use(href="#svg-cam-icon")
+    #chat-element-template
+        li.chat-element 
+            .chat-text {{{text}}}
+            .chat-time {{{time}}}
+
 #chatframe
-    #incoming-video-streams-block 
+    video#incoming-video-streams-block(muted autoplay) 
     #my-video-streams-block
-        #desktop-capture-block 
-        #web-cam-block
-    #chat-history-block
-
-    #peer-display-block
-
+        video#desktop-capture-block(muted autoplay) 
+        video#web-cam-block(muted autoplay)
+    ul#chat-history-block
+    ul#peer-display-block
     #chat-input-block
         input#chat-input 
-
-
-    #hidden-templates
-        #peer-display-template
-            .peer-display-element(uuid="{{{uuid}}}")
-                .peer-name-display {{{uuid}}}
-                .peer-call-button.click-button: svg: use(href="#svg-phone-icon")
-                .peer-video-button.click-button: svg: use(href="#svg-cam-icon")
-        #chat-element-template
-            .chat-element 
-                .chat-text {{{text}}}
-                .chat-time {{{time}}}
