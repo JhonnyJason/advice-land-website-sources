@@ -81,7 +81,9 @@ createRTCPeerConnection = ->
     options = {
         iceServers: [
              {
-                 urls: "stun:stun.advice.land"
+                urls: "turn:stun.advice.land"
+                username: "usr"
+                credential: "cred"
              }
         ]
     }
