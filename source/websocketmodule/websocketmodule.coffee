@@ -9,6 +9,8 @@ import { websocketURL, reconnectTimeoutMS } from "./configmodule.js"
 import * as chatFrame from "./chatframemodule.js"
 import * as webRTC from "./webrtcmodule.js"
 
+import * as S from "./statemodule.js"
+
 ############################################################
 socket = null
 pendingReconnect = false
@@ -22,11 +24,17 @@ websocketReadySignal = null
 knownUUIDS = []
 
 ############################################################
-UUID = crypto.randomUUID()
+UUID = null
 
 ############################################################
 export initialize = ->
     log "initialize"
+    UUID = S.load("UUID")
+    olog {UUID}
+    if !UUID then UUID = crypto.randomUUID()
+    S.save({UUID})
+
+
     return
 
 ############################################################

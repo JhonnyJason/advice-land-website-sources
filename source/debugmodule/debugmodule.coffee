@@ -9,6 +9,6 @@ export modulesToDebug =
     # peertopeermodule: true
     # statemodule: true
     websocketmodule: true
-    webrtcmodule: true
+    # webrtcmodule: true
 
 addModulesToDebug(modulesToDebug)

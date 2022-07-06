@@ -24,8 +24,50 @@ export initialize = ->
 
 ############################################################
 initiateConnectionForCall = (targetUUID) ->
-    # log "startICEForCall"
-    initiateConnectionForVideo(targetUUID)
+    log "initiateConnectionForVideo"
+    conn = createRTCPeerConnection()
+    uuidToOutConnection[targetUUID] = conn
+    conn.adviceLandType = "outConnection"
+    conn.adviceLandUUID = targetUUID
+    
+    webCamBlock.src = ""
+    
+    constraints = {
+        audio: true
+    }
+
+    try
+        if !ownMediaStream?
+            ownMediaStream = await navigator.mediaDevices.getUserMedia(constraints)
+            
+        trackList = ownMediaStream.getTracks()
+        conn.addTrack(track, ownMediaStream) for track in trackList
+
+
+        # we can get an audio track as well, when we use a browser tab
+        # ownDisplayStream = await navigator.mediaDevices.getDisplayMedia(constraints)
+        # desktopCaptureBlock.srcObject = ownDisplayStream
+        # desktopCaptureBlock.play()
+
+        # trackList = ownDisplayStream.getTracks()
+        # log "ownDisplayStream tracks #{trackList.length}"
+
+        offer = await conn.createOffer()
+        descr = new RTCSessionDescription(offer) 
+        await conn.setLocalDescription(descr)
+
+        commObj = {
+            type: "audio-offer"
+            sourceUUID: WS.getUUID()
+            targetUUID: targetUUID
+            offerObj: offer
+        }
+
+        commObjString = JSON.stringify(commObj)
+        message = "sdp #{targetUUID} #{commObjString}"
+        WS.sendMessage(message)
+    catch err then log err
+
     return
 
 initiateConnectionForVideo = (targetUUID) ->
@@ -224,6 +266,44 @@ export handleSDP = (content) ->
             message = "sdp #{sourceUUID} #{commObjString}"
             WS.sendMessage(message)
 
+        if commObj.type == "call-offer"
+            log "call-offer received"
+            constraints = {
+                audio: true
+            }
+
+            sourceUUID = commObj.sourceUUID
+            conn = createRTCPeerConnection()
+
+            uuidToInConnection[sourceUUID] = conn
+            conn.adviceLandType = "inConnection"
+            conn.adviceLandUUID = sourceUUID
+
+            # create RTCSessionDescription
+            descr = new RTCSessionDescription(commObj.offerObj) 
+            await conn.setRemoteDescription(descr)
+
+            if !ownMediaStream?
+                ownMediaStream = await navigator.mediaDevices.getUserMedia(constraints)
+                        
+            trackList = ownMediaStream.getTracks()
+            conn.addTrack(track, ownMediaStream) for track in trackList
+
+            answer = await conn.createAnswer()
+            descr = new RTCSessionDescription(answer)
+            await conn.setLocalDescription(descr)
+
+            commObj = {
+                type: "audio-answer"                        
+                sourceUUID: commObj.sourceUUID
+                targetUUID: commObj.targetUUID
+                answerObj: answer
+            }
+
+            commObjString = JSON.stringify(commObj)
+            message = "sdp #{sourceUUID} #{commObjString}"
+            WS.sendMessage(message)
+
         if commObj.type=="video-answer"
             log "video-answer received"
             targetUUID = commObj.targetUUID
@@ -233,6 +313,17 @@ export handleSDP = (content) ->
             await conn.setRemoteDescription(descr)
 
             log " - > connection should be configured!"
+
+        if commObj.type=="audio-answer"
+            log "audio-answer received"
+            targetUUID = commObj.targetUUID
+            conn = uuidToOutConnection[targetUUID]
+
+            descr = new RTCSessionDescription(commObj.answerObj)
+            await conn.setRemoteDescription(descr)
+
+            log " - > connection should be configured!"
+
 
         if commObj.type == "ice-candidate"
             log "ice-candidate received"

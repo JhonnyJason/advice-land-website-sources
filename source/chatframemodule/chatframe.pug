@@ -3,7 +3,7 @@
     #peer-display-template
         li.peer-display-element(uuid="{{{uuid}}}")
             .peer-name-display {{{uuid}}}
-            .peer-call-button.click-button: svg: use(href="#svg-phone-icon")
+            .peer-call-button.click-button(disabled): svg: use(href="#svg-phone-icon")
             .peer-video-button.click-button: svg: use(href="#svg-cam-icon")
     #chat-element-template
         li.chat-element 
