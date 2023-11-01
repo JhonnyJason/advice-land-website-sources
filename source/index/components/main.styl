@@ -1,12 +1,24 @@
 #hero-section
     width 100%
     height 80vh
+    padding-top 46px
     background-image: url('img/hero1.jpg')
     background-size: cover
     background-repeat: no-repeat
     background-position center
     position relative
     border-bottom: solid 30px cd-flash
+
+    h1 
+        position absolute
+        top 50%
+        left 50%
+        transform translate(-50%, -50%)
+        font-size: 52px
+        text-shadow: 0 2px 5px #000
+        color cd-flash
+        width fit-content
+        text-align: left
 
 #recommendation-section
     max-width: max-content-width
@@ -53,9 +65,16 @@
         background-image: url("img/coffee-not-coffee.jpg")
 
 @media screen and (min-width: 640px)
+    #hero-section
+        h1
+            font-size 62px
     #recommendation-section
         grid-template-columns: 1fr 1fr
 
 @media screen and (min-width: 960px)
+    #hero-section
+        h1
+            font-size 72px
+            font-weight: bold
     #recommendation-section
         grid-template-columns: 1fr 1fr 1fr
