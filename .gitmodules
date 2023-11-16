@@ -7,3 +7,6 @@
 [submodule "articles/article1"]
 	path = articles/article1
 	url = git@github.com:JhonnyJason/advice-land-article1.git
+[submodule "ressources/md-content"]
+	path = ressources/md-content
+	url = git@github.com:JhonnyJason/advice-land-md-content.git
